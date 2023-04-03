@@ -13,7 +13,8 @@ import {
   Dropdown,
   Button,
 } from "reactstrap";
-import { ReactComponent as LogoWhite } from "../assets/images/logos/xtremelogowhite.svg";
+// import { ReactComponent as LogoWhite } from "../assets/images/logos/xtremelogowhite.svg";
+import LogoWhite  from "../assets/images/logos/Black Navbar Logo.png";
 import user1 from "../assets/images/users/user1.jpg";
 
 const Header = () => {
@@ -31,7 +32,8 @@ const Header = () => {
     <Navbar color="primary" dark expand="md">
       <div className="d-flex align-items-center">
         <NavbarBrand href="/" className="d-lg-none">
-          <LogoWhite />
+          {/* <LogoWhite /> */}
+          <img src={LogoWhite} alt="logo" className="logo" />
         </NavbarBrand>
         <Button
           color="primary"

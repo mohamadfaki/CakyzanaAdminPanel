@@ -12,6 +12,14 @@ const SalesChart = () => {
         name: "Oneplue 9",
         data: [0, 11, 32, 45, 32, 34, 52, 41],
       },
+      {
+        name: "Samsung S23",
+        data: [0, 5, 21, 45, 20, 40, 100, 200],
+      },
+      {
+        name: "Samsung",
+        data: [0, 40, 100, 200],
+      },
     ],
     options: {
       chart: {

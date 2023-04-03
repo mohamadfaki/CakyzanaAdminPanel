@@ -53,6 +53,38 @@ const navigation = [
     href: "/about",
     icon: "bi bi-people",
   },
+
+  {
+    title: "",
+    href: "",
+    icon: "",
+  },
+
+  {
+    title: "Inventory",
+    href: "/inventory",
+    icon: "bi bi-card-checklist",
+  },
+  {
+    title: "New Invoice",
+    href: "/newInvoice",
+    icon: "bi bi-receipt",
+  },
+  {
+    title: "New Item",
+    href: "/newItem",
+    icon: "bi bi-cart-plus",
+  },
+  {
+    title: "User Management",
+    href: "/userManagement",
+    icon: "bi bi-person-circle",
+  },
+  {
+    title: "Staff Management",
+    href: "/staffManagement",
+    icon: "bi bi-people",
+  },
 ];
 
 const Sidebar = () => {
@@ -89,15 +121,6 @@ const Sidebar = () => {
               </Link>
             </NavItem>
           ))}
-          <Button
-            color="danger"
-            tag="a"
-            target="_blank"
-            className="mt-3"
-            href="https://www.wrappixel.com/templates/xtreme-react-redux-admin/?ref=33"
-          >
-            Upgrade To Pro
-          </Button>
         </Nav>
       </div>
     </div>
