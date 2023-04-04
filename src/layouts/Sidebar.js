@@ -85,6 +85,11 @@ const navigation = [
     href: "/staffManagement",
     icon: "bi bi-people",
   },
+  {
+    title: "Class Management",
+    href: "/classesManagement",
+    icon: "bi bi-people",
+  },
 ];
 
 const Sidebar = () => {
