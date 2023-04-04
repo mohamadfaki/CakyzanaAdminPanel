@@ -1,63 +1,99 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
+import inventoryItems from "../../data/InventoryItems";
+import { Col, Table, Card, CardTitle, CardBody } from "reactstrap";
 
 function ClassesManagement() {
-    const [individualItems, setIndividualItems] = useState([]);
-    const [classesList, setClassesList] = useState([]);
+  const [classesList, setClassesList] = useState([]);
+  const [individualItems, setIndividualItems] = useState([]);
 
-    useEffect(() => {
-        getClasses();
-    }, []);
+  useEffect(() => {
+    getClasses();
+  }, []);
 
-    const getClasses = () => {
-        const AllClasses = [];
+  const getClasses = () => {
+    const AllClasses = [];
+
+    db.collection("classCategories")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const classes = doc.data();
+          AllClasses.push(classes);
+        });
         setClassesList(AllClasses);
 
-        db.collection("Course")
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    const classes = doc.data();
-                    AllClasses.push(classes);
-                });
+        let individualItems = AllClasses.map((item) => {
+          return <InventoryItem item={item} key={item.id} />;
+        });
+        setIndividualItems(individualItems);
+      });
+  };
 
-                setClassesList(AllClasses);
-                setIndividualItems(
-                    AllClasses.map((item) => {
-                        return <InventoryItem item={item} key={item.id} />;
-                    })
-                );
-            });
-    };
-
-    const InventoryItem = ({ item }) => {
-        console.log(item);
-
-        return (
-            <tr>
-                <td>hello</td>
-                {/* <th scope="row">{item.id}</th>
-        <td>
-          <img
-            src="https://beverages2u.com/wp-content/uploads/2019/05/nestlebottle-2.png"
-            alt="nestle water bottle"
-            style={{ width: "150px", objectFit: "contain" }}
-          />
-        </td>
-        <td>{item.name}</td>
-        <td>{item.description}</td>
-        <td>{item.price}</td>
-        <td>{item.quantity}</td> */}
-            </tr>
-        );
-    };
-
+  const InventoryItem = ({ item }) => {
+    console.log(item);
     return (
-        <div>
-            <h1>Classes</h1>
-        </div>
+      <tr>
+        <th scope="row">{item.id}</th>
+        <td>{item.classCategory}</td>
+        <td>
+          {item.items.map((item) => (
+            <div key={item.id} style={{ borderBottom: '1px solid #ccc', padding: '7px'}}>
+              {item.title}
+            </div>
+          ))}
+        </td>
+        <td>
+          {item.items.map((item) => (
+            <div key={item.id} style={{ borderBottom: '1px solid #ccc', padding: '7px'}}>
+              {item.duration}
+            </div>
+          ))}
+        </td>
+        <td>
+          {item.items.map((item) => (
+            <div key={item.id} style={{ borderBottom: '1px solid #ccc', padding: '7px'}}>
+              {item.description}
+            </div>
+          ))}
+        </td>
+      </tr>
     );
+  };
+
+
+  return (
+    <>
+      <Col lg="12">
+        <Card>
+          <CardTitle tag="h6" className="border-bottom p-3 mb-0">
+            {/* <i className="bi bi-card-text me-2"> </i> */}
+            <i className="bi bi-card-checklist me-2"> </i>
+            Manage Classes
+          </CardTitle>
+          <CardBody className="">
+            <Table style={{ width: '100%', margin: '0 auto', textAlign: 'center', justifyContent: 'center', verticalAlign: 'middle', borderCollapse: 'collapse' }} bordered striped>
+
+              <thead style={{ borderCollapse: 'collapse' }}>
+                <tr>
+                  <th>#ID</th>
+                  <th>Class Category</th>
+                  <th>Title</th>
+                  <th>Duration</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody style={{ borderCollapse: 'collapse' }}>
+                {individualItems}
+              </tbody>
+            </Table>
+
+          </CardBody>
+        </Card>
+      </Col>
+    </>
+  );
 }
 
 export default ClassesManagement;
