@@ -1,98 +1,110 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { Table, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { db } from "../../firebase";
-import inventoryItems from "../../data/InventoryItems";
-import { Col, Table, Card, CardTitle, CardBody } from "reactstrap";
 
 function ClassesManagement() {
-  const [classesList, setClassesList] = useState([]);
-  const [individualItems, setIndividualItems] = useState([]);
+  const [data, setData] = useState([]);
+  const [id, setId] = useState('');
+  const [classCategory, setClassCategory] = useState('');
+  const [titleId, setTitleId] = useState('');
+  const [title, setTitle] = useState('');
+  const [duration, setDuration] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
-    getClasses();
+    db.collection("classCategories").get()
+      .then(querySnapshot => {
+        const data = querySnapshot.docs.map(doc => doc.data());
+        setData(data);
+      });
   }, []);
 
-  const getClasses = () => {
-    const AllClasses = [];
-
-    db.collection("classCategories")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const classes = doc.data();
-          AllClasses.push(classes);
-        });
-        setClassesList(AllClasses);
-
-        let individualItems = AllClasses.map((item) => {
-          return <InventoryItem item={item} key={item.id} />;
-        });
-        setIndividualItems(individualItems);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    db.collection("classCategories").add({
+      id,
+      classCategory,
+      items: [{
+        id: titleId,
+        image: '',
+        title,
+        duration,
+        description
+      }]
+    })
+      .then(() => {
+        console.log("Class data successfully added!");
+        setId('');
+        setClassCategory('');
+        setTitleId('');
+        setTitle('');
+        setDuration('');
+        setDescription('');
+      })
+      .catch((error) => {
+        console.error("Error adding class data: ", error);
       });
-  };
-
-  const InventoryItem = ({ item }) => {
-    console.log(item);
-    return (
-      <tr>
-        <th scope="row">{item.id}</th>
-        <td>{item.classCategory}</td>
-        <td>
-          {item.items.map((item) => (
-            <div key={item.id} style={{ borderBottom: '1px solid #ccc', padding: '7px'}}>
-              {item.title}
-            </div>
-          ))}
-        </td>
-        <td>
-          {item.items.map((item) => (
-            <div key={item.id} style={{ borderBottom: '1px solid #ccc', padding: '7px'}}>
-              {item.duration}
-            </div>
-          ))}
-        </td>
-        <td>
-          {item.items.map((item) => (
-            <div key={item.id} style={{ borderBottom: '1px solid #ccc', padding: '7px'}}>
-              {item.description}
-            </div>
-          ))}
-        </td>
-      </tr>
-    );
-  };
-
+  }
 
   return (
-    <>
-      <Col lg="12">
-        <Card>
-          <CardTitle tag="h6" className="border-bottom p-3 mb-0">
-            {/* <i className="bi bi-card-text me-2"> </i> */}
-            <i className="bi bi-card-checklist me-2"> </i>
-            Manage Classes
-          </CardTitle>
-          <CardBody className="">
-            <Table style={{ width: '100%', margin: '0 auto', textAlign: 'center', justifyContent: 'center', verticalAlign: 'middle', borderCollapse: 'collapse' }} bordered striped>
+    <div style={{ margin: '20px' }}>
+      <Table bordered style={{ borderCollapse: 'collapse', width: '100%' }}>
+        <thead>
+          <tr>
+            <th style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>ID</th>
+            <th style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>Class Category</th>
+            <th style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>Title ID</th>
+            <th style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>Title</th>
+            <th style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>Duration</th>
+            <th style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map(item => (
+            item.items.map((title, index) => (
+              <tr key={title.id}>
+                {index === 0 && <td rowSpan={item.items.length} style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}>{item.id}</td>}
+                {index === 0 && <td rowSpan={item.items.length} style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}>{item.classCategory}</td>}
+                <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>{title.id}</td>
+                <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>{title.title}</td>
+                <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>{title.duration}</td>
+                <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center' }}>{title.description}</td>
+              </tr>
+            ))
+          ))}
+        </tbody>
+      </Table>
+      <h2>Add New Class</h2>
+      <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label for="id">Class Category ID</Label>
+          <Input type="text" name="id" id="id" placeholder="Enter class category ID" value={id} onChange={(e) => setId(e.target.value)} required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="classCategory">Class Category</Label>
+          <Input type="text" name="classCategory" id="classCategory" placeholder="Enter class category" value={classCategory} onChange={(e) => setClassCategory(e.target.value)} required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="titleId">Title ID</Label>
+          <Input type="text" name="titleId" id="titleId" placeholder="Enter title ID" value={titleId} onChange={(e) => setTitleId(e.target.value)} required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="title">Title</Label>
+          <Input type="text" name="title" id="title" placeholder="Enter title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="duration">Duration</Label>
+          <Input type="text" name="duration" id="duration" placeholder="Enter duration" value={duration} onChange={(e) => setDuration(e.target.value)} required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="description">Description</Label>
+          <Input type="textarea" name="description" id="description" placeholder="Enter description" value={description} onChange={(e) => setDescription(e.target.value)} required />
+        </FormGroup>
+        <Button type="submit" color="primary">Submit</Button>
+      </Form>
 
-              <thead style={{ borderCollapse: 'collapse' }}>
-                <tr>
-                  <th>#ID</th>
-                  <th>Class Category</th>
-                  <th>Title</th>
-                  <th>Duration</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody style={{ borderCollapse: 'collapse' }}>
-                {individualItems}
-              </tbody>
-            </Table>
+    </div>
 
-          </CardBody>
-        </Card>
-      </Col>
-    </>
   );
 }
 
