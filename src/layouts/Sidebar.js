@@ -88,7 +88,7 @@ const navigation = [
   {
     title: "Class Management",
     href: "/classesManagement",
-    icon: "bi bi-people",
+    icon: "bi bi-book",
   },
 ];
 
