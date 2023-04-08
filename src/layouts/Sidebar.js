@@ -90,6 +90,11 @@ const navigation = [
     href: "/classesManagement",
     icon: "bi bi-book",
   },
+  {
+    title: "Utensil Management",
+    href: "/utensilsManagement",
+    icon: "bi bi-tools",
+  }
 ];
 
 const Sidebar = () => {
