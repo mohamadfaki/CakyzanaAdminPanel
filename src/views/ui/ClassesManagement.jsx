@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import './styling/ClassManagement.css';
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 function ClassesManagement() {
   const [data, setData] = useState([]);
@@ -18,6 +18,7 @@ function ClassesManagement() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const [numChanges, setNumChanges] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     db.collection("classCategories").get()
@@ -96,6 +97,17 @@ function ClassesManagement() {
     setNumChanges(numChanges + 1);
     alert(`Item with ID '${titleId}' removed from class category with ID '${classCategoryId}'`);
   }
+
+  const EditClass = (item, title) => {
+    const data = {
+      id: item.id,
+      classCategory: item.classCategory,
+      title: title
+    };
+    
+    navigate(`/editClass?data=${encodeURIComponent(JSON.stringify(data))}`)
+  }
+  
   
   return (
     <div style={{ margin: '20px' }}>
@@ -121,7 +133,7 @@ function ClassesManagement() {
                 <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}>{title.title}</td>
                 <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}>{title.duration}</td>
                 <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}>{title.description}</td>
-                <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}><span id="boot-icon" class="bi bi-trash-fill" style={{ fontSize: '1rem', color: 'rgb(255, 0, 0)', cursor: 'pointer' }} onClick={() => handleDelete(item.id, title.id)}></span><span id="boot-icon" class="bi bi-pencil-square" style={{fontSize: '1rem', color: 'rgb(0, 0, 255)', cursor:'pointer' }}></span></td>
+                <td style={{ border: '1px solid black', padding: '10px', textAlign: 'center', verticalAlign: 'middle' }}><span id="boot-icon" class="bi bi-trash-fill" style={{ fontSize: '1rem', color: 'rgb(255, 0, 0)', cursor: 'pointer' }} onClick={() => handleDelete(item.id, title.id)}></span><span id="boot-icon" class="bi bi-pencil-square" style={{fontSize: '1rem', color: 'rgb(0, 0, 255)', cursor:'pointer' }} onClick={()=> EditClass(item, title)}></span></td>
               </tr>
             ))
           ))}

@@ -23,6 +23,7 @@ const NewItem = lazy(() => import("../views/ui/NewItem"));
 const UserManagement = lazy(() => import("../views/ui/UserManagement"));
 const StaffManagement = lazy(() => import("../views/ui/StaffManagement"));
 const ClassesManagement = lazy(() => import("../views/ui/ClassesManagement"));
+const EditClass = lazy(() => import("../views/ui/EditClass"));
 
 /*****Routes******/
 
@@ -49,6 +50,8 @@ const ThemeRoutes = [
       { path: "/userManagement", exact: true, element: <UserManagement /> },
       { path: "/staffManagement", exact: true, element: <StaffManagement /> },
       { path: "/classesManagement", exact: true, element: <ClassesManagement /> },
+      { path: "/editClass", exact: true, element: <EditClass /> },
+
     ],
   },
 ];
