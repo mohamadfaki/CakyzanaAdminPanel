@@ -25,6 +25,7 @@ const StaffManagement = lazy(() => import("../views/ui/StaffManagement"));
 const ClassesManagement = lazy(() => import("../views/ui/ClassesManagement"));
 const EditClass = lazy(() => import("../views/ui/EditClass"));
 const UtensilsManagement = lazy(() => import("../views/ui/UtensilsManagement"));
+const OrdersManagement = lazy(() => import("../views/ui/OrdersManagement"));
 
 /*****Routes******/
 
@@ -52,7 +53,8 @@ const ThemeRoutes = [
       { path: "/staffManagement", exact: true, element: <StaffManagement /> },
       { path: "/classesManagement", exact: true, element: <ClassesManagement /> },
       { path: "/editClass", exact: true, element: <EditClass /> },
-      { path: "/utensilsManagement", exact: true, element: <UtensilsManagement />}
+      { path: "/utensilsManagement", exact: true, element: <UtensilsManagement />},
+      {path:"/ordersManagement", exact: true, element: <OrdersManagement />}
     ],
   },
 ];

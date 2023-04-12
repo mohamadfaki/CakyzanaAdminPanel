@@ -94,6 +94,11 @@ const navigation = [
     title: "Utensil Management",
     href: "/utensilsManagement",
     icon: "bi bi-tools",
+  },
+  {
+    title: "Order Management",
+    href: "/ordersManagement",
+    icon: "bi bi-card-checklist",
   }
 ];
 
