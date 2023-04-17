@@ -73,35 +73,35 @@ const Forms = () => {
                 <Label for="exampleText">Text Area</Label>
                 <Input id="exampleText" name="text" type="textarea" />
               </FormGroup>
-              <FormGroup>
-                <Label for="exampleFile">File</Label>
-                <Input id="exampleFile" name="file" type="file" />
-                <FormText>
-                  This is some placeholder block-level help text for the above
-                  input. It's a bit lighter and easily wraps to a new line.
-                </FormText>
-              </FormGroup>
-              <FormGroup tag="fieldset">
-                <legend>Radio Buttons</legend>
-                <FormGroup check>
-                  <Input name="radio1" type="radio" />{" "}
-                  <Label check>
-                    Option one is this and that—be sure to include why it's
-                    great
-                  </Label>
-                </FormGroup>
-                <FormGroup check>
-                  <Input name="radio1" type="radio" />{" "}
-                  <Label check>
-                    Option two can be something else and selecting it will
-                    deselect option one
-                  </Label>
-                </FormGroup>
-                <FormGroup check disabled>
-                  <Input disabled name="radio1" type="radio" />{" "}
-                  <Label check>Option three is disabled</Label>
-                </FormGroup>
-              </FormGroup>
+                      <FormGroup>
+                        <Label for="exampleFile">File</Label>
+                        <Input id="exampleFile" name="file" type="file" />
+                        <FormText>
+                          This is some placeholder block-level help text for the above
+                          input. It's a bit lighter and easily wraps to a new line.
+                        </FormText>
+                      </FormGroup>
+                  <FormGroup tag="fieldset">
+                    <legend>Radio Buttons</legend>
+                    <FormGroup check>
+                      <Input name="radio1" type="radio" />{" "}
+                      <Label check>
+                        Option one is this and that—be sure to include why it's
+                        great
+                      </Label>
+                    </FormGroup>
+                    <FormGroup check>
+                      <Input name="radio1" type="radio" />{" "}
+                      <Label check>
+                        Option two can be something else and selecting it will
+                        deselect option one
+                      </Label>
+                    </FormGroup>
+                    <FormGroup check disabled>
+                      <Input disabled name="radio1" type="radio" />{" "}
+                      <Label check>Option three is disabled</Label>
+                    </FormGroup>
+                  </FormGroup>
               <FormGroup check>
                 <Input type="checkbox" /> <Label check>Check me out</Label>
               </FormGroup>

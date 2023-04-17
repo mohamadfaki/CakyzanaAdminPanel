@@ -20,8 +20,12 @@ function ClassesManagement() {
   const [numChanges, setNumChanges] = useState(0);
   const navigate = useNavigate();
 
+
+  //todo: make the cat dropdown
+  //todo: make add video to firebase and storage (wait to return the access token)
+ 
   useEffect(() => {
-    db.collection("classCategories").get()
+    db.collection("").get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
         setData(data);
