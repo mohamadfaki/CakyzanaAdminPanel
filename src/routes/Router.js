@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
+import UtensilEdit from "../views/ui/UtensilEdit.jsx";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -26,6 +27,7 @@ const ClassesManagement = lazy(() => import("../views/ui/ClassesManagement"));
 const EditClass = lazy(() => import("../views/ui/EditClass"));
 const UtensilsManagement = lazy(() => import("../views/ui/UtensilsManagement"));
 const OrdersManagement = lazy(() => import("../views/ui/OrdersManagement"));
+
 
 /*****Routes******/
 
@@ -54,7 +56,8 @@ const ThemeRoutes = [
       { path: "/classesManagement", exact: true, element: <ClassesManagement /> },
       { path: "/editClass", exact: true, element: <EditClass /> },
       { path: "/utensilsManagement", exact: true, element: <UtensilsManagement />},
-      {path:"/ordersManagement", exact: true, element: <OrdersManagement />}
+      {path:"/ordersManagement", exact: true, element: <OrdersManagement />},
+      {path:"/editUtensil", exact: true, element: <UtensilEdit />},
     ],
   },
 ];
