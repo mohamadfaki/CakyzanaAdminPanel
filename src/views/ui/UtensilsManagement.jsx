@@ -31,6 +31,7 @@ function UtensilsManagement() {
   const storageRef = storage.ref();
   const [itemImageUrl, setItemImageUrl] = useState("");
   const [accessTokenItemImage, setAccessTokenItemImage] = useState("");
+  const [Description,setDescription] = useState("");
 
   useEffect(() => {
     db.collection("utensils")
@@ -58,6 +59,8 @@ function UtensilsManagement() {
         price: Price,
         shape: Shape,
         image: itemImageUrl,
+        Description,
+        type: "utensil",
       })
       .then(() => {
         setDimensions("");
@@ -222,7 +225,7 @@ function UtensilsManagement() {
                 padding: "10px",
                 textAlign: "center",
               }}
-            ></th>
+            >Action</th>
           </tr>
         </thead>
         <tbody>
@@ -319,6 +322,7 @@ function UtensilsManagement() {
                       fontSize: "1rem",
                       color: "rgb(255, 0, 0)",
                       cursor: "pointer",
+                      marginRight: "10px",
                     }}
                     onClick={() => handleDelete(product.id)}
                   ></span>
@@ -537,6 +541,18 @@ function UtensilsManagement() {
           />
         </FormGroup>
         <FormGroup>
+          <Label for="Description">Description</Label>
+          <Input
+            type="text"
+            name="Description"
+            id="Description"
+            placeholder="Enter Description"
+            value={Description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </FormGroup>
+        <FormGroup>
           <Label for="Name">Name</Label>
           <Input
             type="text"
@@ -573,7 +589,7 @@ function UtensilsManagement() {
           />
         </FormGroup>
         <FormGroup>
-          <Label for="exampleFile">File</Label>
+          <Label for="exampleFile">Image</Label>
           <Input
             id="exampleFile"
             name="file"
@@ -583,8 +599,9 @@ function UtensilsManagement() {
             }}
           />
           <FormText>
-            This is some placeholder block-level help text for the above input.
-            It's a bit lighter and easily wraps to a new line.
+            When selecting an image it may take some time to upload, please be
+            patient.
+          
           </FormText>
         </FormGroup>
         {itemImageUrl !== "" && (
